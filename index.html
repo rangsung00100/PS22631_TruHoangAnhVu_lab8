@@ -1,0 +1,169 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lab 8</title>
+    <style>
+        #form1{
+            width: 400px;
+            margin: auto;
+            padding: 10px 40px;
+            background: whitesmoke;
+            border: 1px solid black;
+        }
+        #form1 .txt{
+            width: 400px;
+            padding: 6px;
+            border: solid 1px lightgrey;
+        }
+        #form1 fieldset{
+            border: solid 1px lightgrey;
+            margin-top: 0;
+        }
+        #form1 #dangki{
+            width: 100px;
+            height: 40px;
+            border: none;
+            background-color: royalblue;
+            color: white;
+        }
+        #form1 #baoloi{
+            margin: 0px auto;
+            color: red;
+        }
+        #form1 .loi {
+            width: 400px;
+            padding: 6px;
+            border: 1px solid red;
+            background-color: yellow;
+        }
+    </style>
+</head>
+<body>
+    <form id="form1">
+        <h2 align="center">ĐĂNG KÝ THÀNH VIÊN</h2>
+    <p>
+      <labe>Mã sinh viên</label><br/>
+      <input id="masv" type="text" class="txt">
+    </p>  
+    <p>
+      <label>Họ và tên</label><br/>
+      <input id="hoten" type="text" class="txt">
+    </p>
+    <p>
+      <label>Email</label><br/>
+      <input id="email" type="email" class="txt">
+    </p>  
+
+    <p>
+        <fieldset id="fs1">
+            <legend>Giới tính</legend>
+            <input type="radio" name="phai" value="Nam"><label>Nam</label>
+            <input type="radio" name="phai" value="Nữ"><label>Nữ</label><br> 
+        </fieldset>
+    </p>
+    
+    <p>
+        <fieldset id="fs2">
+            <legend>Sở thích</legend>
+            <input type="checkbox" name="st"><label>Đọc sách</label>
+            <input type="checkbox" name="st"><label>Du lịch</label>
+            <input type="checkbox" name="st"><label>Ẩm thực</label>
+            <input type="checkbox" name="st"><label>Âm nhạc</label>
+            <input type="checkbox" name="st"><label>Khác</label>
+        </fieldset>
+    </p>
+    <p>
+      <label>Quốc tịch</label><br>
+      <select id="quoctich" class="txt">
+          <option value="0">Chọn Quốc Tịch</option>
+          <option value="1">VietNam</option>
+          <option value="2">Korea</option>
+          <option value="3">America</option>
+      </select>
+    </p> 
+
+    <p>
+      <label>Ghi chú</label><br/>
+      <textarea id="ghichu" rows="5" cols="54" class="txt"></textarea>
+    </p>
+    <div id="baoloi"></div>
+      <button type="button" onclick="return kiemtra();" id="dangki">Đăng kí</button>
+    </form>
+</body>
+<script>
+    function kiemtra(){
+        var loi = "";
+        //kiểm tra msv
+        var masv = document.getElementById("masv");
+        if(masv.value==""){
+            masv.className="loi";
+            loi += "Mã sinh viên không được bỏ trống<br>";
+        }
+        else if(masv.value.length!=7){
+            masv.className="loi";
+            loi += "Mã sinh viên không đúng 7 ký tự<br>";
+        }
+        else masv.className="txt";
+        //kiểm tra họ tên
+        var hoten = document.getElementById("hoten");
+        if(hoten.value==""){
+            hoten.className="loi";
+            loi += "Họ và tên không được bỏ trống<br>";
+        }
+        else if(hoten.value.length>30){
+            hoten.className="loi";
+            loi += "Họ và tên quá dài<br>";
+        }
+        else hoten.className="txt";
+        //kiểm tra email
+        var email = document.getElementById("email");
+        if(email.value==""){
+            email.className="loi";
+            loi += "Email không được bỏ trống<br>";
+        }
+        else email.className="txt";
+        //kiêm tra phái
+        dem=0;
+        var arr_phai = document.getElementsByName("phai");
+        for(var i=0; i<arr_phai.length; i++){
+            if(arr_phai[i].checked == true) dem++;
+        }
+        if(dem==0){
+            document.getElementById("fs1").className="loi";
+            loi += "Phải chọn giới tính<br>";
+        }
+        else document.getElementById("fs1").className="";
+        //kiểm tra sở thích
+        arr_sothich = document.getElementsByName("st");
+        dem=0;
+        for(var i=0; i<arr_sothich.length; i++){
+            if(arr_sothich[i].checked) dem++;
+        }
+        if(dem==0){
+            document.getElementById("fs2").className="loi";
+            loi += "Phải chọn ít nhất 1 sở thích<br>";
+        }
+        else document.getElementById("fs2").className="";
+        //kiểm tra quốc tịch
+        var qt = document.getElementById("quoctich");
+        if(qt.value==0){
+            qt.className="loi";
+            loi += "Phải chọn quốc tịch<br>";
+        }
+        else qt.className="txt";
+        //kiểm tra ghi chú
+        var gc = document.getElementById('ghichu');
+        if(gc.value.length>200){
+            gc.className="loi";
+            loi += "Ghi chú phải dưới 200 ký tự<br>";
+        }
+        else gc.className="txt";
+        //kiểm tra giá trị
+        
+        if(loi!=""){
+            document.getElementById('baoloi').innerHTML=loi;
+            return false;
+        }
+    }
+</script>
+</html>
